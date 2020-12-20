@@ -382,8 +382,8 @@ span {
     }
 
     .first.active {
-    margin-top: 0.5%;
-    transform: rotate(45deg);
+        margin-top: 0.5%;
+        transform: rotate(45deg);
     }
 
     .third.active {
@@ -391,6 +391,10 @@ span {
         margin-left: 1.8%;
         transform: rotate(-45deg);
         transform: translate(-45deg);
+    }
+    
+    .menu {
+        width: 100vw;
     }
 }
 
