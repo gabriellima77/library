@@ -193,7 +193,7 @@ label input:focus {
     justify-content: flex-end;
 }
 
-.read {
+#read {
     margin-left: -10%;
     margin-right: 10%;
     width: 30%;

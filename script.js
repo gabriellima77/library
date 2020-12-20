@@ -211,6 +211,15 @@ Card.prototype.edit = function(){
     yes.isEdit = true;
     const card = this.parentElement.parentElement;
     yes.index = card.dataset.index;
+    const book = myLibrary[yes.index];
+    inputs.forEach(input => {
+        if(input.id == "read"){
+            input.checked = book[input.id]
+        }
+        else{
+            input.value = book[input.id];
+        }
+    });
     form.style.display = "flex";
 }
 
