@@ -360,13 +360,16 @@ span {
     .text, .made {
         font-size: 0.8rem;
     }
+
+    .card {
+        width: 30vw;
+    }
 }
 
 @media(max-width: 767px) {
     #form {
         margin-top: 25%;
         width: 100vw;
-
     }
 
     #no {
@@ -378,7 +381,7 @@ span {
     }
 
     .card {
-        width: 80%;
+        width: 60%;
     }
 
     .first.active {
@@ -395,6 +398,22 @@ span {
     
     .menu {
         width: 100vw;
+    }
+
+    #header {
+        font-size: 1rem;
+    }
+
+    #add {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
+
+@media(max-width: 423px) {
+    .card {
+        width: 80%;
     }
 }
 
