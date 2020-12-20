@@ -1,0 +1,349 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    font-size: 82.5%;
+}
+
+body, #menu, .card, #options, .content {
+    display: flex;
+    justify-content: space-between;
+}
+
+body {
+    background-color: #b4dfd8;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+}
+
+body::-webkit-scrollbar {
+    width: 14px;
+}
+
+body::-webkit-scrollbar-track {
+    background-color: #9b70f3;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #3a00ad;
+}
+
+.text {
+    margin-left: 5%;
+    font-size: 2rem;
+}
+
+#menu {
+    align-items: center;
+    position: fixed;
+    width: 100vw;
+    height: 15vh;
+    background-color: #6520EE;
+}
+
+.menu {
+    position: absolute;
+    display: none;
+    top: 15vh;
+    right: 0;
+    width: 20vw;
+    height: 80vh;
+    background-color: #6520EE;
+}
+
+#header {
+    font-size: 3rem;
+    color: white;
+    margin-left: 5%;
+}
+
+#add {
+    color: white;
+    font-size: 3rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    width: 5%;
+    height: 67.5%;
+    cursor: pointer;
+    background-color: #7cf87e96;
+    transition: all .5s;
+    margin-right: 1.8%;
+}
+
+#add:hover {
+    border-radius: 50%;
+    transform: rotate(-180deg);
+    background-color:  #7cf87e;
+}
+
+#info, #bar, label, #no, #yes, .footer, footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#info{
+    cursor: pointer;
+    width: 5%;
+    height: 60%;
+    margin-right: 7%;
+}
+
+.first, .second, .third {
+    align-self: center;
+    position: absolute;
+    border-top: 2px solid white;
+    width: 3%;
+    height: 5%;
+    margin-top: -2%;
+    transition: all .5s;
+}
+
+.second {
+    margin-top: 0%;
+}
+
+.third {
+    margin-top: 2%;
+}
+
+.second.active {
+    display: none;
+}
+
+.first.active {
+    margin-top: 0.5%;
+    transform: rotate(45deg);
+}
+
+.third.active {
+    margin-top: 0.5%;
+    margin-left: 0.5%;
+    transform: rotate(-45deg);
+    transform: translate(-45deg);
+}
+
+#library {
+    margin: 20vh 10vw 10vh 10vw;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 10px;
+    column-gap: 5px;
+}
+
+.card {
+    flex-direction: column;
+    font-size: 2rem;
+    border-radius: 10px;
+    box-shadow: 1px 4px 5px 2px rgba(0, 0, 0, 0.6);
+    width: 20vw;
+    height: 50vh;
+    font-family: 'Roboto Slab', serif;
+}
+
+#form{
+    border-radius: 5px;
+    display: none;
+    flex-direction: column;
+    font-size: 2rem;
+    align-self: center;
+    justify-content: space-between;
+    margin-top: 8%;
+    position: absolute;
+    z-index: 1;
+    background-color: #34009c;
+    width: 40vw;
+    height: 80vh;
+}
+
+#bar {
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    color: white;
+    width: 100%;
+    height: 10%;
+    background-color: #211A1D;
+    margin-bottom: 5%;
+}
+
+label {
+    width: 100%;
+    height: 17%;
+}
+
+label input {
+    box-sizing: border-box;
+    color: white;
+    text-align: center;
+    border: none;
+    outline: none;
+    width: 80%;
+    height: 50%;
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: all 1s;
+}
+
+label input:focus {
+    border-bottom: 2px solid  #874bff;
+}
+
+.check {
+    justify-content: flex-end;
+}
+
+.read {
+    margin-left: -10%;
+    margin-right: 10%;
+    width: 30%;
+    height: 30%;
+}
+
+#options {
+    align-items: center;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    width: 100%;
+    height: 14%;
+}
+
+#no{
+    border-bottom-left-radius: 5px;
+    font-size: 2.4rem;
+    cursor: pointer;
+    width: 50%;
+    height: 100%;
+    transition: all 1s;
+    color: white;
+}
+
+#no:hover{
+    background-color:  rgb(218, 0, 44);
+}
+
+#yes {
+    border-bottom-right-radius: 5px;
+    cursor: pointer;
+    width: 50%;
+    height: 100%;
+    transition: all 1s;
+}
+
+#yes:hover {
+    background-color:  rgb(70, 165, 70);
+}
+
+#symbol {
+    border-left: 4px solid white;
+    border-bottom: 4px solid white;
+    width: 10%;
+    height: 10%;
+    transform: rotate(-45deg);
+}
+
+.bar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 15%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #6320EE;
+}
+
+span {
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
+    color: white;
+    cursor: pointer;
+    width: 50%;
+    height: 100%;
+    transition: all .5s;
+}
+
+.edit {
+    border-top-left-radius: 10px;
+    padding-left: 10%;
+}
+
+.edit:hover {
+    background-color: rgb(70, 165, 70);
+}
+
+.remove {
+    border-top-right-radius: 10px;
+    justify-content: flex-end;
+    padding-right: 10%;
+}
+
+.remove:hover{
+    background-color: crimson;
+}
+
+.content {
+    padding: 0 5% 0 5%;
+    border-top: 2px solid #A2FAA3;
+    padding-top: 5%;
+    box-sizing: border-box;
+    flex-direction: column;
+    align-items: center;
+    height: 65%;
+    background-image: linear-gradient(to bottom,  #6320EE, #8075FF); 
+}
+
+.title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 2.5rem;
+}
+
+.author{
+    box-sizing: border-box;
+    padding-right: 5%;
+    align-self: flex-end;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.3rem;
+}
+
+.footer{
+    justify-content: flex-end;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    width: 100%;
+    height: 20%;
+    background-color: #8075FF;
+}
+
+.done {
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+    width: 20%;
+    height: 40%;
+    background-color: blue;
+}
+
+.pages {
+    margin-right: 18%;
+}
+
+footer {
+    flex-direction: column;
+    position: fixed;
+    width: 100vw;
+    height: 8vh;
+    bottom: 0;
+}
+
+.made {
+    border-radius: 3px;
+    font-size: 1.5rem;
+    width: 20%;
+    text-align: center;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+}
