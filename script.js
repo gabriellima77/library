@@ -2,9 +2,22 @@ let myLibrary = [];
 const library = document.querySelector("#library");
 const info = document.querySelector("#info");
 const form = document.querySelector("#form");
+const inputs = Array.from(document.querySelectorAll("input"));
 const add = document.querySelector("#add");
 const yes = document.querySelector("#yes");
 const no = document.querySelector("#no");
+
+function validString() {
+    const regex = {title: /^[\d|\D]{1,50}$/, author: /^[a-zA-Z]\D{1,49}$/, pages: /^\d{1,5}$/};
+    const type = {title:  "Title has min size is 1 and max size is 50",
+                  author: "first has to be a letter and max size is 50",
+                  pages:  "Has to be a number and max size is 5"};
+    if(!regex[this.id].test(this.value)){
+        this.placeholder = type[this.id];
+    }
+}
+
+inputs.forEach(input => input.addEventListener("input", validString));
 
 add.addEventListener("click", ()=> {
     form.style.display = "flex";
