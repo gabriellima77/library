@@ -1,12 +1,14 @@
-let myLibrary = [];
+let myLibrary = [new Book("The Hobbit", "J. R. R. Tolkien", 256, true)];
 const regex = {title: /^[\d|\D]{1,50}$/, author: /^[a-zA-Z]\D{0,49}$/, pages: /^\d{1,5}$/};
 const library = document.querySelector("#library");
+const menu = document.querySelector(".menu");
 const info = document.querySelector("#info");
 const form = document.querySelector("#form");
 const inputs = Array.from(document.querySelectorAll("input"));
 const add = document.querySelector("#add");
 const yes = document.querySelector("#yes");
 const no = document.querySelector("#no");
+
 
 function validString() {
     const type = {title:  "Title has min size is 1 and max size is 50",
@@ -20,6 +22,7 @@ function validString() {
 inputs.forEach(input => input.addEventListener("input", validString));
 
 add.addEventListener("click", ()=> {
+    inputs.forEach(input => (input.id == "read")? input.checked = false: input.value = "");
     form.style.display = "flex";
 });
 
@@ -28,16 +31,32 @@ no.onclick = () => form.style.display = "none";
 function getInfo(menu){
     const content = Array.from(menu.children);
     content.forEach(c => menu.removeChild(c));
-    const para = document.createElement("p");
+    const para = [document.createElement("p"), document.createElement("p"), document.createElement("p")];
+    const made = document.createElement("p");
+    made.classList.add("made");
+    made.textContent = "Made by Gabriel Lima";
     const quantity = myLibrary.reduce((number, book)=> {
         if(!book.read){
-            number++;
+            number[0]++;
+            number[2] += +book.pages;
+        }
+        else{
+            number[1]++;
         }
         return number;
-    }, 0);
-    para.classList.add("text");
-    para.textContent = `Books to read: ${quantity}`;
-    menu.appendChild(para);
+    }, [0, 0, 0]);
+    const text = {"Books to read:": quantity[0], 
+                  "Books already read:": quantity[1],
+                  "Pages remaining:": quantity[2]
+                 };
+    let i = 0;
+    for(let key in text){
+        para[i].classList.add("text");
+        para[i].textContent = `${key} ${text[key]}`;
+        menu.appendChild(para[i]);
+        i++;
+    }
+    menu.appendChild(made);
 }
 
 function addCard(){
@@ -63,10 +82,10 @@ function addCard(){
         createBook(addBookToLibrary(array[0], array[1], array[2], array[3]));
         form.style.display = "none";
     }
+    getInfo(menu);
 }
 
 info.addEventListener("click", ()=> {
-    const menu = document.querySelector(".menu");
     const burger = Array.from(info.children);
     if(!info.isClicked){
         burger.forEach(div => div.classList.add("active"));
@@ -155,6 +174,7 @@ Card.prototype.footer = function(){
         this.book.read = input.checked;
         const index = myLibrary.indexOf(this.book);
         myLibrary[index].read = input.checked;
+        getInfo(menu);
     });
     footer.appendChild(input);
     this.card.appendChild(footer);
@@ -205,6 +225,7 @@ Card.prototype.remove = function(){
         c.dataset.index = index;
         book.id = index;
     })
+    getInfo(menu)
 }
 
 Card.prototype.edit = function(){

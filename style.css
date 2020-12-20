@@ -44,6 +44,8 @@ body::-webkit-scrollbar-thumb {
 .menu {
     position: absolute;
     display: none;
+    flex-direction: column;
+    align-items: center;
     top: 15vh;
     right: 0;
     width: 20vw;
@@ -330,19 +332,12 @@ span {
     margin-right: 18%;
 }
 
-footer {
-    flex-direction: column;
-    position: fixed;
-    width: 100vw;
-    height: 8vh;
-    bottom: 0;
-}
-
 .made {
+    margin-top: auto;
+    margin-bottom: 15%;
     border-radius: 3px;
     font-size: 1.2rem;
-    width: 20%;
-    text-align: center;
+    width: 80%;
     border-bottom: 1px solid black;
     border-top: 1px solid black;
 }
