@@ -130,12 +130,15 @@ body::-webkit-scrollbar-thumb {
 #library {
     margin: 20vh 10vw 10vh 10vw;
     display: grid;
+    justify-content: center;
+    align-items: center;
     grid-template-columns: repeat(4, 1fr);
     row-gap: 10px;
     column-gap: 5px;
 }
 
 .card {
+    margin: 0 auto;
     flex-direction: column;
     font-size: 2rem;
     border-radius: 10px;
@@ -145,7 +148,7 @@ body::-webkit-scrollbar-thumb {
     font-family: 'Roboto Slab', serif;
 }
 
-#form{
+#form {
     border-radius: 5px;
     display: none;
     flex-direction: column;
@@ -340,4 +343,75 @@ span {
     width: 80%;
     border-bottom: 1px solid black;
     border-top: 1px solid black;
+}
+
+@media(max-width: 1023px){
+    .title {
+        font-size: 1rem;
+    }
+
+    .author {
+        font-size: 0.7rem;
+    }
+    .footer {
+        font-size: 0.8rem;
+    }
+
+    .text, .made {
+        font-size: 0.8rem;
+    }
+}
+
+@media(max-width: 767px) {
+    #form {
+        margin-top: 25%;
+        width: 100vw;
+
+    }
+
+    #no {
+        font-size: 1.5rem;
+    }
+
+    #library {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        width: 80%;
+    }
+
+    .first.active {
+    margin-top: 0.5%;
+    transform: rotate(45deg);
+    }
+
+    .third.active {
+        margin-top: 0.5%;
+        margin-left: 1.8%;
+        transform: rotate(-45deg);
+        transform: translate(-45deg);
+    }
+}
+
+@media (min-width: 1440px){
+    * {
+        font-size: 20px;
+    }
+
+    #add {
+        width: 90px;
+        height: 90px;
+    }
+}
+
+@media (min-width: 2559px){
+    * {
+        font-size: 30px;
+    }
+
+    #add {
+        width: 150px;
+        height: 150px;
+    }
 }
