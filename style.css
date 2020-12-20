@@ -1,17 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 * {
-    margin: 0;
-    padding: 0;
-    font-size: 82.5%;
+    font-size: 16px;
 }
-
 body, #menu, .card, #options, .content {
     display: flex;
     justify-content: space-between;
 }
 
 body {
+    margin: 0;
+    padding: 0;
     background-color: #b4dfd8;
     flex-direction: column;
     font-family: 'Roboto', sans-serif;
@@ -31,7 +30,7 @@ body::-webkit-scrollbar-thumb {
 
 .text {
     margin-left: 5%;
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 #menu {
@@ -53,20 +52,20 @@ body::-webkit-scrollbar-thumb {
 }
 
 #header {
-    font-size: 3rem;
+    font-size: 2rem;
     color: white;
     margin-left: 5%;
 }
 
 #add {
     color: white;
-    font-size: 3rem;
+    font-size: 2rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     border-radius: 20px;
-    width: 5%;
-    height: 67.5%;
+    width: 65px;
+    height: 65px;
     cursor: pointer;
     background-color: #7cf87e96;
     transition: all .5s;
@@ -298,7 +297,7 @@ span {
 .title {
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 2.5rem;
+    font-size: 1.8rem;
 }
 
 .author{
@@ -341,7 +340,7 @@ footer {
 
 .made {
     border-radius: 3px;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     width: 20%;
     text-align: center;
     border-bottom: 1px solid black;

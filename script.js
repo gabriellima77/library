@@ -1,4 +1,5 @@
 let myLibrary = [];
+const regex = {title: /^[\d|\D]{1,50}$/, author: /^[a-zA-Z]\D{0,49}$/, pages: /^\d{1,5}$/};
 const library = document.querySelector("#library");
 const info = document.querySelector("#info");
 const form = document.querySelector("#form");
@@ -8,7 +9,6 @@ const yes = document.querySelector("#yes");
 const no = document.querySelector("#no");
 
 function validString() {
-    const regex = {title: /^[\d|\D]{1,50}$/, author: /^[a-zA-Z]\D{1,49}$/, pages: /^\d{1,5}$/};
     const type = {title:  "Title has min size is 1 and max size is 50",
                   author: "first has to be a letter and max size is 50",
                   pages:  "Has to be a number and max size is 5"};
@@ -41,19 +41,28 @@ function getInfo(menu){
 }
 
 function addCard(){
-    const input = Array.from(document.querySelectorAll("input"));
-    let array = []
-    input.forEach(i => {
-        if(i.type == "checkbox"){
-            array.push(i.checked)
+    let countValidInput = 0;
+    inputs.forEach(input => {
+        if(input.type != "checkbox" && regex[input.id].test(input.value)){
+            countValidInput++;
         }
-        else{
-            array.push(i.value);
-        }
-        i.value = "";
     });
-    createBook(addBookToLibrary(array[0], array[1], array[2], array[3]));
-    form.style.display = "none";
+    this.isValid = (countValidInput == inputs.length - 1)? true: false;
+    if(this.isValid){
+        const input = Array.from(document.querySelectorAll("input"));
+        let array = []
+        input.forEach(i => {
+            if(i.type == "checkbox"){
+                array.push(i.checked)
+            }
+            else{
+                array.push(i.value);
+            }
+            i.value = "";
+        });
+        createBook(addBookToLibrary(array[0], array[1], array[2], array[3]));
+        form.style.display = "none";
+    }
 }
 
 info.addEventListener("click", ()=> {
