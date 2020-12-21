@@ -1,6 +1,9 @@
-let myLibrary = [new Book("The Hobbit", "J. R. R. Tolkien", 256, true)];
+// ============= Global Variables ============= //
+
+let myLibrary = [];
 const regex = {title: /^[\d|\D]{1,50}$/, author: /^[a-zA-Z]\D{0,49}$/, pages: /^\d{1,5}$/};
 const library = document.querySelector("#library");
+const storage = Array.from(document.querySelector("#storage").children);
 const menu = document.querySelector(".menu");
 const info = document.querySelector("#info");
 const form = document.querySelector("#form");
@@ -9,6 +12,49 @@ const add = document.querySelector("#add");
 const yes = document.querySelector("#yes");
 const no = document.querySelector("#no");
 
+
+// ============= Local Storage ============= //
+
+storage.forEach(div => div.addEventListener("click", pickStorageType));
+(localStorage.getItem("local") == "true")? pickStorageType(): undefined;
+
+function pickStorageType(){
+    document.querySelector("#container").style.display = "none";
+    document.querySelector("#menu").style.display = "flex";
+    library.style.display = "grid";
+    if(this.id == "local"){
+        localStorage.setItem("local", "true");
+    }
+}
+
+function localLibrary(){
+    const values = {title: "", author: "", pages: "", read: ""};
+    for(let key in values){
+        values[key] = localStorage.getItem(key);
+        values[key] = values[key].substring(0, values[key].length - 1).split(",");
+    }
+    for(let i = 0; i < values.title.length; i++){
+        let book = [];
+        for(let key in values){
+            book.push(values[key][i]);
+        }
+        addBookToLibrary(book[0], book[1], book[2], book[3]);
+    }
+}
+
+function setLocalStorage(){
+    const values = {title: "", author: "", pages: "", read: ""};
+    myLibrary.forEach(book => {
+        for(key in book){
+            if(key != "id"){
+                values[key] += `${book[key]},`;
+            }
+        }
+    });
+    for(key in values){
+        localStorage.setItem(key, values[key]);
+    } 
+}
 
 function validString() {
     const type = {title:  "Title has min size is 1 and max size is 50",
@@ -19,7 +65,7 @@ function validString() {
     }
 }
 
-inputs.forEach(input => input.addEventListener("input", validString));
+inputs.forEach(input => (input.type != "checkbox")? input.addEventListener("input", validString): undefined);
 
 add.addEventListener("click", ()=> {
     inputs.forEach(input => (input.id == "read")? input.checked = false: input.value = "");
@@ -31,7 +77,10 @@ no.onclick = () => form.style.display = "none";
 function getInfo(menu){
     const content = Array.from(menu.children);
     content.forEach(c => menu.removeChild(c));
-    const para = [document.createElement("p"), document.createElement("p"), document.createElement("p")];
+    const para = [document.createElement("p"),
+                  document.createElement("p"),
+                  document.createElement("p"),
+                  document.createElement("p")];
     const made = document.createElement("p");
     made.classList.add("made");
     made.textContent = "Made by Gabriel Lima";
@@ -47,7 +96,8 @@ function getInfo(menu){
     }, [0, 0, 0]);
     const text = {"Books to read:": quantity[0], 
                   "Books already read:": quantity[1],
-                  "Pages remaining:": quantity[2]
+                  "Pages remaining:": quantity[2],
+                  "Storage type:": "local"
                  };
     let i = 0;
     for(let key in text){
@@ -82,6 +132,7 @@ function addCard(){
         createBook(addBookToLibrary(array[0], array[1], array[2], array[3]));
         form.style.display = "none";
     }
+    setLocalStorage();
     getInfo(menu);
 }
 
@@ -174,6 +225,7 @@ Card.prototype.footer = function(){
         this.book.read = input.checked;
         const index = myLibrary.indexOf(this.book);
         myLibrary[index].read = input.checked;
+        setLocalStorage();
         getInfo(menu);
     });
     footer.appendChild(input);
@@ -224,8 +276,9 @@ Card.prototype.remove = function(){
         let index = myLibrary.indexOf(book);
         c.dataset.index = index;
         book.id = index;
-    })
-    getInfo(menu)
+    });
+    setLocalStorage();
+    getInfo(menu);
 }
 
 Card.prototype.edit = function(){
@@ -244,8 +297,8 @@ Card.prototype.edit = function(){
     form.style.display = "flex";
 }
 
-function addBookToLibrary(title, author, pages, read){
-    const newBook = new Book(title, author, pages, read);
+function addBookToLibrary(...args){
+    const newBook = new Book(args[0], args[1], args[2], args[3]);
     if(yes.isEdit){
         const book = myLibrary.filter(book =>{
             if(book.id == yes.index){
@@ -258,6 +311,7 @@ function addBookToLibrary(title, author, pages, read){
     else{
         myLibrary.push(newBook);
     }
+    setLocalStorage();
     return newBook;
 }
 
@@ -278,4 +332,5 @@ function createBook(book){
     }
 }
 
+localLibrary();
 showBooks(myLibrary);
