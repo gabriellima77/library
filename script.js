@@ -36,6 +36,9 @@ function localLibrary(){
     for(let i = 0; i < values.title.length; i++){
         let book = [];
         for(let key in values){
+            if(key == "read"){
+                values[key][i] = (values[key][i] == "true")? true: false;
+            }
             book.push(values[key][i]);
         }
         addBookToLibrary(book[0], book[1], book[2], book[3]);
