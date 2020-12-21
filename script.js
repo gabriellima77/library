@@ -90,6 +90,7 @@ function setStorage(){
     if(localStorage.local){
         localLibrary();
         storage.type = "local";
+        showBooks(myLibrary);
     }
     else if(localStorage.remote){
         remoteLibrary();
