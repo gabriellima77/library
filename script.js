@@ -30,8 +30,10 @@ function pickStorageType(){
 function localLibrary(){
     const values = {title: "", author: "", pages: "", read: ""};
     for(let key in values){
-        values[key] = localStorage.getItem(key);
-        values[key] = values[key].substring(0, values[key].length - 1).split(",");
+        if(localStorage.getItem(key)){
+            values[key] = localStorage.getItem(key);
+            values[key] = values[key].substring(0, values[key].length - 1).split(",");
+        }
     }
     for(let i = 0; i < values.title.length; i++){
         let book = [];
