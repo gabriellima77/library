@@ -13,6 +13,28 @@ const yes = document.querySelector("#yes");
 const no = document.querySelector("#no");
 
 
+// ============= Remote Sotorage ============= //
+(localStorage.getItem("remote") == "true")? pickStorageType(): undefined;
+
+function updateLibrary(){
+    firebase.database().ref("myLibrary").remove();
+    firebase.database().ref("myLibrary").set(myLibrary);
+}
+
+function remoteLibrary(){
+    let lib = firebase.database().ref("myLibrary");
+    lib.once('value').then(snapshot => {
+        const data = snapshot.val();
+        if(data){
+            data.forEach(book => {
+                const {title, author, pages, read} = book;
+                addBookToLibrary(title, author, pages, read);
+            });
+            showBooks(myLibrary);
+        }  
+    });
+}
+
 // ============= Local Storage ============= //
 
 storage.forEach(div => div.addEventListener("click", pickStorageType));
@@ -24,6 +46,9 @@ function pickStorageType(){
     library.style.display = "grid";
     if(this.id == "local"){
         localStorage.setItem("local", "true");
+    }
+    else if(this.id == "remote"){
+        localStorage.setItem("remote", "true");
     }
 }
 
@@ -59,6 +84,17 @@ function setLocalStorage(){
     for(key in values){
         localStorage.setItem(key, values[key]);
     } 
+}
+
+function setStorage(){
+    if(localStorage.local){
+        localLibrary();
+        storage.type = "local";
+    }
+    else if(localStorage.remote){
+        remoteLibrary();
+        storage.type = "remote";
+    }
 }
 
 function validString() {
@@ -102,7 +138,7 @@ function getInfo(menu){
     const text = {"Books to read:": quantity[0], 
                   "Books already read:": quantity[1],
                   "Pages remaining:": quantity[2],
-                  "Storage type:": "local"
+                  "Storage type:": storage.type
                  };
     let i = 0;
     for(let key in text){
@@ -137,7 +173,13 @@ function addCard(){
         createBook(addBookToLibrary(array[0], array[1], array[2], array[3]));
         form.style.display = "none";
     }
-    setLocalStorage();
+    if(localStorage.local){
+        setLocalStorage();
+    }
+    else if(localStorage.remote){
+        updateLibrary();
+    }
+
     getInfo(menu);
 }
 
@@ -230,7 +272,12 @@ Card.prototype.footer = function(){
         this.book.read = input.checked;
         const index = myLibrary.indexOf(this.book);
         myLibrary[index].read = input.checked;
-        setLocalStorage();
+        if(localStorage.local){
+            setLocalStorage();
+        }
+        else if(localStorage.remote){
+            updateLibrary();
+        }
         getInfo(menu);
     });
     footer.appendChild(input);
@@ -282,7 +329,12 @@ Card.prototype.remove = function(){
         c.dataset.index = index;
         book.id = index;
     });
-    setLocalStorage();
+    if(localStorage.local){
+        setLocalStorage();
+    }
+    else if(localStorage.remote){
+        updateLibrary();
+    }
     getInfo(menu);
 }
 
@@ -316,7 +368,9 @@ function addBookToLibrary(...args){
     else{
         myLibrary.push(newBook);
     }
-    setLocalStorage();
+    if(localStorage.local){
+        setLocalStorage();
+    }
     return newBook;
 }
 
@@ -337,5 +391,4 @@ function createBook(book){
     }
 }
 
-localLibrary();
-showBooks(myLibrary);
+setStorage();

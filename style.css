@@ -64,6 +64,15 @@ body::-webkit-scrollbar-thumb {
     transition: background .8s;
 }
 
+#remote img{
+    margin-left: 10%;
+}
+
+#local img {
+    margin-right: 10%;
+    width: 40px;
+}
+
 #local:hover{
     background: rgb(70, 165, 70);
 }

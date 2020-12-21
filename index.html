@@ -11,10 +11,12 @@
             <h2 >Where you want to store your data?</h2>
             <div id="storage">
                 <div id="local">
+                    <img src="img/house.svg" alt="an yellow hose">
                     <p>Local</p>
                 </div>
                 <div id="remote">
                     <p>Remote</p>
+                    <img src="img/lockup.png" alt="fire Base logo">
                 </div>
             </div>
         </div>
@@ -53,6 +55,31 @@
         </form> 
         <main id="library">
         </main>
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
+        <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+            apiKey: "AIzaSyC14WLA3qjuIyiKLxh-2SiToyGCzLPJh2c",
+            authDomain: "library-f281c.firebaseapp.com",
+            databaseURL: "https://library-f281c-default-rtdb.firebaseio.com",
+            projectId: "library-f281c",
+            storageBucket: "library-f281c.appspot.com",
+            messagingSenderId: "679066470839",
+            appId: "1:679066470839:web:2d4f671b06f6d5af2ac032",
+            measurementId: "G-PML9V97SDQ"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+        firebase.database();
+        </script>
         <script src="script.js"></script>
     </body>
 </html>
