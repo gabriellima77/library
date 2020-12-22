@@ -13,8 +13,26 @@ const yes = document.querySelector("#yes");
 const no = document.querySelector("#no");
 
 
-// ============= Remote Sotorage ============= //
-(localStorage.getItem("remote") == "true")? pickStorageType(): undefined;
+(function () {
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+            apiKey: "AIzaSyC14WLA3qjuIyiKLxh-2SiToyGCzLPJh2c",
+            authDomain: "library-f281c.firebaseapp.com",
+            databaseURL: "https://library-f281c-default-rtdb.firebaseio.com",
+            projectId: "library-f281c",
+            storageBucket: "library-f281c.appspot.com",
+            messagingSenderId: "679066470839",
+            appId: "1:679066470839:web:2d4f671b06f6d5af2ac032",
+            measurementId: "G-PML9V97SDQ"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+})()
+
+// ============= Remote Storage ============= //
 
 function updateLibrary(){
     firebase.database().ref("myLibrary").remove();
@@ -39,8 +57,10 @@ function remoteLibrary(){
 
 storage.forEach(div => div.addEventListener("click", pickStorageType));
 (localStorage.getItem("local") == "true")? pickStorageType(): undefined;
+(localStorage.getItem("remote") == "true")? pickStorageType(): undefined;
 
 function pickStorageType(){
+    console.log(1);
     document.querySelector("#container").style.display = "none";
     document.querySelector("#menu").style.display = "flex";
     library.style.display = "grid";
@@ -49,6 +69,12 @@ function pickStorageType(){
     }
     else if(this.id == "remote"){
         localStorage.setItem("remote", "true");
+    }
+    if(localStorage.getItem("local")){
+        storage.type = "local";
+    }
+    else if(localStorage.getItem("remote")){
+        storage.type = "remote";
     }
 }
 
@@ -89,12 +115,10 @@ function setLocalStorage(){
 function setStorage(){
     if(localStorage.local){
         localLibrary();
-        storage.type = "local";
         showBooks(myLibrary);
     }
     else if(localStorage.remote){
         remoteLibrary();
-        storage.type = "remote";
     }
 }
 
