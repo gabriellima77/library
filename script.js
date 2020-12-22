@@ -35,22 +35,57 @@ const no = document.querySelector("#no");
 // ============= Remote Storage ============= //
 
 function updateLibrary(){
-    firebase.database().ref("myLibrary").remove();
-    firebase.database().ref("myLibrary").set(myLibrary);
+    const user = localStorage.getItem("user");
+    if(user){
+        firebase.database().ref(user).set(myLibrary);
+    }
+    else{
+        createUser();
+    }
 }
 
 function remoteLibrary(){
-    let lib = firebase.database().ref("myLibrary");
-    lib.once('value').then(snapshot => {
-        const data = snapshot.val();
-        if(data){
-            data.forEach(book => {
-                const {title, author, pages, read} = book;
-                addBookToLibrary(title, author, pages, read);
-            });
-            showBooks(myLibrary);
-        }  
-    });
+    const user = localStorage.getItem("user");
+    if(user){
+        let lib = firebase.database().ref(user);
+        lib.once('value').then(snapshot => {
+            const data = snapshot.val();
+            if(data){
+                data.forEach(book => {
+                    const {title, author, pages, read} = book;
+                    addBookToLibrary(title, author, pages, read);
+                });
+                showBooks(myLibrary);
+            }  
+        });
+    }
+    else{
+        createUser();
+        remoteLibrary();
+    }
+}
+
+function createUser(){
+    const numbers = [];
+    const letters = [];
+    let user = "";
+    for(let i = 0; i < 10; i++){
+        numbers.push(i);
+    }
+    for(let i = 65; i < 91; i++){
+        letters.push(String.fromCharCode(i));
+    }
+    for(let i = 0; i < 6; i++){
+        if(i % 2 == 0){
+            user += letters[Math.floor(Math.random() * 26)];
+        }
+        else {
+            user += numbers[Math.floor(Math.random() * 10)];
+        }
+    }
+    if(!localStorage.getItem("user")){
+        localStorage.setItem("user", user);
+    }
 }
 
 // ============= Local Storage ============= //
@@ -59,8 +94,8 @@ storage.forEach(div => div.addEventListener("click", pickStorageType));
 (localStorage.getItem("local") == "true")? pickStorageType(): undefined;
 (localStorage.getItem("remote") == "true")? pickStorageType(): undefined;
 
+
 function pickStorageType(){
-    console.log(1);
     document.querySelector("#container").style.display = "none";
     document.querySelector("#menu").style.display = "flex";
     library.style.display = "grid";
@@ -69,6 +104,7 @@ function pickStorageType(){
     }
     else if(this.id == "remote"){
         localStorage.setItem("remote", "true");
+        createUser();
     }
     if(localStorage.getItem("local")){
         storage.type = "local";
@@ -184,6 +220,7 @@ function addCard(){
     });
     this.isValid = (countValidInput == inputs.length - 1)? true: false;
     if(this.isValid){
+        console.log(1);
         const input = Array.from(document.querySelectorAll("input"));
         let array = []
         input.forEach(i => {
@@ -204,7 +241,6 @@ function addCard(){
     else if(localStorage.remote){
         updateLibrary();
     }
-
     getInfo(menu);
 }
 
