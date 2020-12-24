@@ -159,11 +159,18 @@ function setStorage(){
 }
 
 function validString() {
-    const type = {title:  "Title has min size is 1 and max size is 50",
+    const para = this.parentElement.firstElementChild;
+    const type = {title:  "Title has min size 1 and max size is 50",
                   author: "first has to be a letter and max size is 50",
                   pages:  "Has to be a number and max size is 5"};
     if(!regex[this.id].test(this.value)){
-        this.placeholder = type[this.id];
+        para.classList.add("active");
+        para.textContent = type[this.id];
+        this.placeholder = "";
+    }
+    else{
+        para.classList.remove("active");
+        this.placeholder = this.id;
     }
 }
 
@@ -174,7 +181,12 @@ add.addEventListener("click", ()=> {
     form.style.display = "flex";
 });
 
-no.onclick = () => form.style.display = "none";
+no.onclick = () => {
+    form.style.display = "none";
+    document.querySelectorAll("input").forEach(input => input.placeholder = input.id);
+    const paraWarning = document.querySelectorAll(".warning");
+    paraWarning.forEach(warning => warning.classList.remove("active"));
+};
 
 function getInfo(menu){
     const content = Array.from(menu.children);
@@ -214,11 +226,26 @@ function getInfo(menu){
 function addCard(){
     let countValidInput = 0;
     inputs.forEach(input => {
+        let para = input.parentElement.firstElementChild;
+        const type = {title:  "Title has min size 1 and max size is 50",
+                      author: "first has to be a letter and max size is 50",
+                      pages:  "Has to be a number and max size is 5"};
         if(input.type != "checkbox" && regex[input.id].test(input.value)){
             countValidInput++;
         }
+        else if(input.type != "checkbox" && !regex[input.id].test(input.value)){
+            input.placeholder = "";
+            para.classList.add("active");
+            para.textContent = type[input.id];
+        }
     });
-    this.isValid = (countValidInput == inputs.length - 1)? true: false;
+    if(countValidInput == inputs.length - 1){
+        this.isValid = true;
+        inputs.forEach(input => input.placeholder = input.id);
+    }
+    else{
+        this.isValid = false;
+    }
     if(this.isValid){
         console.log(1);
         const input = Array.from(document.querySelectorAll("input"));

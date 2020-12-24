@@ -353,6 +353,17 @@ span {
     background-image: linear-gradient(to bottom,  #6320EE, #8075FF); 
 }
 
+.warning {
+    color: rgb(161, 161, 161);
+    position: absolute;
+    display: none;
+}
+
+.warning.active {
+    display: block;
+    animation: textUp .8s linear forwards;
+}
+
 .title {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -363,7 +374,7 @@ span {
     box-sizing: border-box;
     padding-right: 5%;
     align-self: flex-end;
-/*     overflow: hidden; */
+    overflow: hidden;
     text-overflow: ellipsis;
     font-size: 1.2rem;
 }
@@ -499,5 +510,22 @@ span {
     #add {
         width: 150px;
         height: 150px;
+    }
+}
+
+@keyframes textUp {
+    0% {
+        margin-top: 2.2%;
+    }
+    50% {
+        margin-top: 2.3%;
+    }
+    99% {
+        margin-top: -12%;
+        color:rgb(161, 161, 161);
+    }
+    100% {
+        color: red;
+        margin-top: -12%;
     }
 }
